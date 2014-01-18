@@ -1,0 +1,22 @@
+*** Settings ***
+Library			OperatingSystem
+Library 		Selenium2Library
+# Force Tags		Portalaaa
+# Default Tags	Portal
+
+*** Variables ***
+${Version}		3.1.5
+${BROWSER}      Firefox
+${PHASE}		BETA
+${MA_URL_ALPHA}		https://accountalpha.trendnet.org/my_account?LANG=
+${MA_URL_BETA}		https://accountbeta.trendmicro.com/my_account?LANG=
+
+
+*** Keywords ***
+Open Browser To Login Page
+	[Arguments]    	${locale}
+    Open Browser 	${MA_URL_${PHASE}}${locale}    ${BROWSER}
+    # Maximize Browser Window
+    # Set Selenium Speed    ${DELAY}
+    # Login Page Should Be Open
+

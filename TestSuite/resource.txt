@@ -48,7 +48,7 @@ ${INVALID PASS}		andyalu123
 *** Keywords ***
 Open Browser To Login Page
 	[Arguments]    	${LOCALE}
-    Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}
+    Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
     Page Should Be Open 

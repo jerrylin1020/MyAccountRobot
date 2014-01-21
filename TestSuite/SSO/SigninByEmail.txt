@@ -3,7 +3,8 @@ Documentation     A test suite for sso signin by email.
 ...
 ...               This test has a workflow that is created using keywords in
 ...               the imported resource file.
-Resource          ../resource.txt
+Resource          ../Resources/resource.txt
+Resource          ../Resources/TextMsg.txt
 # Set Tags		
 
 
@@ -16,11 +17,12 @@ ${dpjp_product_name}     パスワードマネージャー
 
 *** Keywords ***
 Login with invalid credentials should fail 
-    [Arguments]    	${username} 	${password}
+    [Arguments]    	${username} 	${password}    ${error_msg}
     Open Browser To Login Page	   JA-JP
     Input username    ${username}
     Input password    ${password}
     Submit Credentials
+    Page Should Contain     ${error_msg}
     [Teardown]    Close Browser
 
 Page should contain forget email text
@@ -33,31 +35,32 @@ Page should contain forget sn text
     Page Should Contain Link    link=${FORGET_SN_LINK_TEXT}
 
 
+
 *** Test Cases ***
 Sigin by email by a valid account (Locale=JA-JP)
-	[Tags]		SSO		Sign-in by email
+	[Tags]		SSO		Sign-in by email      AAA
     Open Browser To Login Page	   JA-JP
     # Confirm forget email/password/sn link are shown on sign-in page
     Page should contain forget email text   
-    # Page should contain forget password text  
-    # Page should contain forget sn text  
+    Page should contain forget password text  
+    Page should contain forget sn text  
     # Start to sigin in by email
     Input Username    ${valid_username}
     Input Password    ${valid_password}
     Submit Credentials
-    Location Should Contain     ${MYACCOUNT_LOCATION}
+    Location Should Contain   ${MYACCOUNT_LOCATION}
     Wait Until Page Contains    ${dpjp_product_name}     30 seconds
     [Teardown]    Close Browser
 
 
 Login with invalid credentials
-	[Tags]		SSO		Sign-in by email
+	[Tags]		SSO		Sign-in by email      BBB
 	[Template]    Login with invalid credentials should fail
-	${INVALID USER}		${INVALID PASS}
-	# ${EMPTY}			${INVALID_PASS}
-    # ${INVALID_USER}		${EMPTY}
- 	# ${EMPTY}			${EMPTY}
-    [Teardown]    Close Browser
+	${INVALID_USER}		${INVALID_PASS}    ${ERROR_MSG_OF_INVALID_ACCOUNT}
+	${EMPTY}			${INVALID_PASS}    ${ERROR_MSG_OF_NO_EMAIL}
+    ${INVALID_USER}		${EMPTY}           ${ERROR_MSG_OF_NO_PASS}
+ 	${EMPTY}			${EMPTY}           ${ERROR_MSG_OF_NO_EMAIL_PASS}
+  
 
 # Forget password by valid MPA
 

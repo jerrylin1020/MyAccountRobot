@@ -1,6 +1,8 @@
 *** Settings ***
 Library			OperatingSystem
 Library 		Selenium2Library
+Resource        ErrorMsg.txt
+Resource        TextMsg.txt
 # Force Tags		Portalaaa
 # Default Tags	Portal
 
@@ -10,6 +12,13 @@ ${BROWSER}      Firefox
 ${PHASE}		BETA
 ${LOCALE}		JA-JP
 ${DELAY}		0
+
+# Define Error messages
+${ERROR_MSG_OF_NO_EMAIL_PASS}		${ERROR_MSG_OF_NO_EMAIL_PASS_${LOCALE}}
+${ERROR_MSG_OF_NO_PASS}             ${ERROR_MSG_OF_NO_PASS_${LOCALE}}
+${ERROR_MSG_OF_NO_EMAIL}            ${ERROR_MSG_OF_NO_EMAIL_${LOCALE}}
+${ERROR_MSG_OF_INVALID_ACCOUNT}     ${ERROR_MSG_OF_INVALID_ACCOUNT_${LOCALE}}
+
 
 # Define MyAccount URL
 ${MA_URL_ALPHA}				https://accountalpha.trendnet.org/my_account?LANG=
@@ -22,13 +31,8 @@ ${PAGE _TITLE_EN-US}		My Account | Sign In
 ${PAGE_TITLE}		${PAGE _TITLE_${LOCALE}}
 
 # Forget series variables
-${FORGET_EMAIL_LINK_TEXT_JA-JP}   		メールアドレスをお忘れの場合
-${FORGET_EMAIL_LINK_TEXT_EN-US}			Forgot which address you used before?
 ${FORGET_EMAIL_LINK_TEXT}				${FORGET_EMAIL_LINK_TEXT_${LOCALE}}
-${FORGET_PASSWORD_LINK_TEXT_JA-JP}  	パスワードをお忘れの場合
-${FORGET_PASSWORD_LINK_TEXT_EN-US} 		Forgot your password?
 ${FORGET_PASSWORD_LINK_TEXT}			${FORGET_PASSWORD_LINK_TEXT_${LOCALE}}
-${FORGET_SN_LINK_TEXT_JA-JP}   			ウイルスバスターのシリアル番号でログインする場合
 ${FORGET_SN_LINK_TEXT}   				${FORGET_SN_LINK_TEXT_${LOCALE}}
 
 
@@ -40,9 +44,9 @@ ${FORGET_SN_ER_ALPHA}         	http://10.1.100.35/GREntry/NonPayment?TARGET=MyAc
 ${FORGET_SN_ER_BETA}         	http://akagrbeta.trendmicro.com/GREntry/NonPayment?TARGET=MyAccount&FUNID=SignInBySN&LOCALE=JA-JP
 
 
-# Define user accounts
-${INVALID USER}		andylau123
-${INVALID PASS}		andyalu123
+# Define invalid user accounts
+${INVALID_USER}		andylau123@yopmail.com
+${INVALID_PASS}		andyalu123
 
 
 *** Keywords ***

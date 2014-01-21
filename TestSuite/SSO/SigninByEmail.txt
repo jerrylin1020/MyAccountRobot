@@ -1,0 +1,65 @@
+*** Settings ***
+Documentation     A test suite for sso signin by email.
+...
+...               This test has a workflow that is created using keywords in
+...               the imported resource file.
+Resource          ../resource.txt
+# Set Tags		
+
+
+*** Variables ***
+${valid_username}   poc-eudb-mpa-allvb@yopmail.com
+${valid_password}   12345678
+
+
+${dpjp_product_name}     パスワードマネージャー
+
+*** Keywords ***
+Login with invalid credentials should fail 
+    [Arguments]    	${username} 	${password}
+    Open Browser To Login Page	   JA-JP
+    Input username    ${username}
+    Input password    ${password}
+    Submit Credentials
+    [Teardown]    Close Browser
+
+Page should contain forget email text
+    Page Should Contain Link    link=${FORGET_EMAIL_LINK_TEXT}
+
+Page should contain forget password text
+    Page Should Contain Link    link=${FORGET_PASSWORD_LINK_TEXT}
+
+Page should contain forget sn text
+    Page Should Contain Link    link=${FORGET_SN_LINK_TEXT}
+
+
+*** Test Cases ***
+Sigin by email by a valid account (Locale=JA-JP)
+	[Tags]		SSO		Sign-in by email
+    Open Browser To Login Page	   JA-JP
+    # Confirm forget email/password/sn link are shown on sign-in page
+    Page should contain forget email text   
+    # Page should contain forget password text  
+    # Page should contain forget sn text  
+    # Start to sigin in by email
+    Input Username    ${valid_username}
+    Input Password    ${valid_password}
+    Submit Credentials
+    Location Should Contain     ${MYACCOUNT_LOCATION}
+    Wait Until Page Contains    ${dpjp_product_name}     30 seconds
+    [Teardown]    Close Browser
+
+
+Login with invalid credentials
+	[Tags]		SSO		Sign-in by email
+	[Template]    Login with invalid credentials should fail
+	${INVALID USER}		${INVALID PASS}
+	# ${EMPTY}			${INVALID_PASS}
+    # ${INVALID_USER}		${EMPTY}
+ 	# ${EMPTY}			${EMPTY}
+    [Teardown]    Close Browser
+
+# Forget password by valid MPA
+
+
+

@@ -5,18 +5,81 @@ Library 		Selenium2Library
 # Default Tags	Portal
 
 *** Variables ***
-${Version}		3.1.5
+${VERSION}		3.1.5
 ${BROWSER}      Firefox
 ${PHASE}		BETA
-${MA_URL_ALPHA}		https://accountalpha.trendnet.org/my_account?LANG=
-${MA_URL_BETA}		https://accountbeta.trendmicro.com/my_account?LANG=
+${LOCALE}		JA-JP
+${DELAY}		0
+
+# Define MyAccount URL
+${MA_URL_ALPHA}				https://accountalpha.trendnet.org/my_account?LANG=
+${MA_URL_BETA}				https://accountbeta.trendmicro.com/my_account?LANG=
+${MYACCOUNT_LOCATION}		https://accountbeta.trendmicro.com/my_account/
+
+# Define page tile variable
+${PAGE _TITLE_JA-JP}		トレンドマイクロアカウント | ログイン
+${PAGE _TITLE_EN-US}		My Account | Sign In
+${PAGE_TITLE}		${PAGE _TITLE_${LOCALE}}
+
+# Forget series variables
+${FORGET_EMAIL_LINK_TEXT_JA-JP}   		メールアドレスをお忘れの場合
+${FORGET_EMAIL_LINK_TEXT_EN-US}			Forgot which address you used before?
+${FORGET_EMAIL_LINK_TEXT}				${FORGET_EMAIL_LINK_TEXT_${LOCALE}}
+${FORGET_PASSWORD_LINK_TEXT_JA-JP}  	パスワードをお忘れの場合
+${FORGET_PASSWORD_LINK_TEXT_EN-US} 		Forgot your password?
+${FORGET_PASSWORD_LINK_TEXT}			${FORGET_PASSWORD_LINK_TEXT_${LOCALE}}
+${FORGET_SN_LINK_TEXT_JA-JP}   			ウイルスバスターのシリアル番号でログインする場合
+${FORGET_SN_LINK_TEXT}   				${FORGET_SN_LINK_TEXT_${LOCALE}}
+
+
+${FORGET_EMAIL_ER_ALPHA}      	http://10.1.100.35/GREntry/NonPayment?Target=MyAccount&FunID=ForgetEmail&Locale=JA-JP
+${FORGET_EMAIL_ER_BETA}      	http://akagrbeta.trendmicro.com/GREntry/NonPayment?Target=MyAccount&FunID=ForgetEmail&Locale=JA-JP
+${FORGET_PASSWORD_ER_ALPHA}   	http://10.1.100.35/GREntry/NonPayment?Target=MyAccount&FunID=ForgetPassword&Locale=JA-JP
+${FORGET_PASSWORD_ER_BETA}   	http://akagrbeta.trendmicro.com/GREntry/NonPayment?Target=MyAccount&FunID=ForgetPassword&Locale=JA-JP
+${FORGET_SN_ER_ALPHA}         	http://10.1.100.35/GREntry/NonPayment?TARGET=MyAccount&FUNID=SignInBySN&LOCALE=JA-JP
+${FORGET_SN_ER_BETA}         	http://akagrbeta.trendmicro.com/GREntry/NonPayment?TARGET=MyAccount&FUNID=SignInBySN&LOCALE=JA-JP
+
+
+# Define user accounts
+${INVALID USER}		andylau123
+${INVALID PASS}		andyalu123
 
 
 *** Keywords ***
 Open Browser To Login Page
-	[Arguments]    	${locale}
-    Open Browser 	${MA_URL_${PHASE}}${locale}    ${BROWSER}
-    # Maximize Browser Window
-    # Set Selenium Speed    ${DELAY}
-    # Login Page Should Be Open
+	[Arguments]    	${LOCALE}
+    Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Page Should Be Open 
+
+Submit Credentials
+    Click Button  sign_in_button
+
+Page Should Be Open
+  	Title Should Be		${PAGE_TITLE}
+
+
+Input Username
+    [Arguments]    ${username}
+    Input Text    username    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    password    ${password}
+
+MyAccount Should Be Open
+    Location Should Contain  ${MYACCOUNT URL}
+    # Title Should Be  Welcome Page
+
+Login Should Have Failed
+    Location Should Be  ${ERROR URL}
+    Title Should Be  Error Page
+
+
+
+#Click Link  xpath=//form/p/a[1]
+#Capture Page Screenshot  ${L10N LANG}_Forget_Email_Non-JP_language.png
+#Capture Page Screenshot
+
 

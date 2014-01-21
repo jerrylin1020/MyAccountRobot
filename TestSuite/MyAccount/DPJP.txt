@@ -1,0 +1,42 @@
+*** Settings ***
+Documentation     A test suite for sso signin by email.
+...
+...               This test has a workflow that is created using keywords in
+...               the imported resource file.
+Resource          ../resource.txt
+# Set Tags		
+
+
+*** Variables ***
+
+
+*** Keywords ***
+Login with invalid credentials should fail 
+    [Arguments]    	${username} 	${password}
+    Open Browser To Login Page	   JA-JP
+    Input username    ${username}
+    Input password    ${password}
+    Submit Credentials
+    [Teardown]    Close Browser
+
+
+*** Test Cases ***
+# Login to MyAccount (JA-JP)
+# 	[Tags]		SSO		Sign-in by email
+#     Open Browser To Login Page	   JA-JP
+#     # Input Username    demo
+#     # Input Password    mode
+#     # Submit Credentials
+#     # Welcome Page Should Be Open
+#     [Teardown]    Close Browser
+
+# Login with invalid credentials
+# 	[Tags]		SSO		Sign-in by email
+# 	[Template]    Login with invalid credentials should fail
+# 	${INVALID USER}		${INVALID PASS}
+# 	${EMPTY}			${INVALID_PASS}
+#     ${INVALID_USER}		${EMPTY}
+#  	${EMPTY}			${EMPTY}
+
+
+

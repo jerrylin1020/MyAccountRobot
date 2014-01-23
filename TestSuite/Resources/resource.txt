@@ -12,6 +12,7 @@ ${BROWSER}      Firefox
 ${PHASE}		BETA
 ${LOCALE}		JA-JP
 ${DELAY}		0
+${FF_PROFILE}   C:/CI/MyAccount/FF_Profile
 
 # Define Error messages
 ${ERROR_MSG_OF_NO_EMAIL_PASS}		${ERROR_MSG_OF_NO_EMAIL_PASS_${LOCALE}}
@@ -52,7 +53,7 @@ ${INVALID_PASS}		andyalu123
 *** Keywords ***
 Open Browser To Login Page
 	[Arguments]    	${LOCALE}
-    Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}
+    Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
     Page Should Be Open 

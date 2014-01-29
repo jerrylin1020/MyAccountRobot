@@ -17,12 +17,20 @@ ${dpjp_product_name}     パスワードマネージャー
 
 *** Keywords ***
 Login with invalid credentials should fail 
-    [Arguments]    	${username} 	${password}    ${error_msg}
+    [Arguments]    	${username} 	${password}   ${selector}    ${error_msg}
     Open Browser To Login Page	   JA-JP
     Input username    ${username}
     Input password    ${password}
     Submit Credentials
-    Page Should Contain     ${error_msg}
+    Element Text Should Be    jquery=${selector}     ${error_msg}
+
+    #For a partial match use this:
+    #Element Should Contain    locator    expected_text
+    #For an exact match use this:
+    #Element Text Should Be    locator    expected_text
+    
+    # Page Should Contain Element       jquery=${selector}        AAA${error_msg}
+    # Wait Until Page Contains Element  jquery=p      20 seconds
     [Teardown]    Close Browser
 
 Page should contain forget email text
@@ -54,12 +62,12 @@ Sigin by email by a valid account (Locale=JA-JP)
 
 
 Login with invalid credentials
-	[Tags]		SSO		Sign-in by email      
+	[Tags]		SSO		SigninByEmail    AAA  
 	[Template]    Login with invalid credentials should fail
-	${INVALID_USER}		${INVALID_PASS}    ${ERROR_MSG_OF_INVALID_ACCOUNT}
-	${EMPTY}			${INVALID_PASS}    ${ERROR_MSG_OF_NO_EMAIL}
-    ${INVALID_USER}		${EMPTY}           ${ERROR_MSG_OF_NO_PASS}
- 	${EMPTY}			${EMPTY}           ${ERROR_MSG_OF_NO_EMAIL_PASS}
+	${INVALID_USER}		${INVALID_PASS}   p.msg.err+p    ${ERROR_MSG_OF_INVALID_ACCOUNT}
+	${EMPTY}			${INVALID_PASS}   div.msg.err    ${ERROR_MSG_OF_NO_EMAIL}
+    ${INVALID_USER}		${EMPTY}          div.msg.err    ${ERROR_MSG_OF_NO_PASS}
+ 	${EMPTY}			${EMPTY}          div.msg.err    ${ERROR_MSG_OF_NO_EMAIL_PASS}
   
 
 # Forget password by valid MPA

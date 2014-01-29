@@ -1,0 +1,3 @@
+*** Settings ***
+Library			OperatingSystem
+Library 		Selenium2Library

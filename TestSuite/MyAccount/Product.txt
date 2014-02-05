@@ -1,0 +1,42 @@
+*** Settings ***
+Documentation     A test suite for MyAccount Product tab.
+...
+...               This test has a workflow that is created using keywords in
+...               the imported resource file.
+Resource          ../Resources/resource.txt
+Resource          ../Resources/TextMsg.txt
+Resource          ../Resources/TestingAccounts.txt
+
+# Set Tags
+
+
+*** Variables ***
+${valid_username}   poc-eudb-mpa-allvb@yopmail.com
+${valid_password}   12345678
+
+
+${dpjp_product_name}     パスワードマネージャー
+
+*** Keywords ***
+
+
+
+*** Test Cases ***
+Product DPJP full no AR (Locale=JA-JP)
+	[Tags]		SSO		Sign-in by email
+    Open Browser To Login Page	   JA-JP
+    # Confirm forget email/password/sn link are shown on sign-in page
+    Page should contain forget email text
+    Page should contain forget password text
+    Page should contain forget sn text
+    # Start to sigin in by email
+    Input Username    ${valid_username}
+    Input Password    ${valid_password}
+    Submit Credentials
+    Location Should Contain   ${MYACCOUNT_LOCATION}
+    Wait Until Page Contains    ${dpjp_product_name}     30 seconds
+    [Teardown]    Close Browser
+
+
+
+

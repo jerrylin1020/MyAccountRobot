@@ -1,1 +1,1 @@
-pybot --variable phase:beta --variable FF_PROFILE: -i 'SigninByEmail' TestSuite
+pybot --variable phase:beta --variable FF_PROFILE: -i 'DPJP' TestSuite

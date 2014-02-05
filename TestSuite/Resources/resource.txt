@@ -56,7 +56,7 @@ Open Browser To Login Page
     Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${MA_URL_${PHASE}}${LOCALE}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
-    Page Should Be Open 
+    Page Should Be Open
 
 Submit Credentials
     Click Button  sign_in_button
@@ -74,7 +74,7 @@ Input Password
     Input Text    password    ${password}
 
 MyAccount Should Be Open
-    Location Should Contain  ${MYACCOUNT URL}
+    Location Should Contain  ${MYACCOUNT_LOCATION}
     # Title Should Be  Welcome Page
 
 Login Should Have Failed

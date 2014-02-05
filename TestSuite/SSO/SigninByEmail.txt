@@ -5,7 +5,7 @@ Documentation     A test suite for sso signin by email.
 ...               the imported resource file.
 Resource          ../Resources/resource.txt
 Resource          ../Resources/TextMsg.txt
-# Set Tags		
+# Set Tags
 
 
 *** Variables ***
@@ -16,7 +16,7 @@ ${valid_password}   12345678
 ${dpjp_product_name}     パスワードマネージャー
 
 *** Keywords ***
-Login with invalid credentials should fail 
+Login with invalid credentials should fail
     [Arguments]    	${username} 	${password}   ${selector}    ${error_msg}
     Open Browser To Login Page	   JA-JP
     Input username    ${username}
@@ -28,7 +28,7 @@ Login with invalid credentials should fail
     #Element Should Contain    locator    expected_text
     #For an exact match use this:
     #Element Text Should Be    locator    expected_text
-    
+
     # Page Should Contain Element       jquery=${selector}        AAA${error_msg}
     # Wait Until Page Contains Element  jquery=p      20 seconds
     [Teardown]    Close Browser
@@ -46,29 +46,29 @@ Page should contain forget sn text
 
 *** Test Cases ***
 Sigin by email by a valid account (Locale=JA-JP)
-	[Tags]		SSO		Sign-in by email      
+	[Tags]		SSO		Sign-in by email
     Open Browser To Login Page	   JA-JP
     # Confirm forget email/password/sn link are shown on sign-in page
-    Page should contain forget email text   
-    Page should contain forget password text  
-    Page should contain forget sn text  
+    Page should contain forget email text
+    Page should contain forget password text
+    Page should contain forget sn text
     # Start to sigin in by email
     Input Username    ${valid_username}
     Input Password    ${valid_password}
     Submit Credentials
-    Location Should Contain   ${MYACCOUNT_LOCATION}
+    MyAccount Should Be Open
     Wait Until Page Contains    ${dpjp_product_name}     30 seconds
     [Teardown]    Close Browser
 
 
 Login with invalid credentials
-	[Tags]		SSO		SigninByEmail    AAA  
+	[Tags]		SSO		SigninByEmail    AAA
 	[Template]    Login with invalid credentials should fail
 	${INVALID_USER}		${INVALID_PASS}   p.msg.err+p    ${ERROR_MSG_OF_INVALID_ACCOUNT}
 	${EMPTY}			${INVALID_PASS}   div.msg.err    ${ERROR_MSG_OF_NO_EMAIL}
     ${INVALID_USER}		${EMPTY}          div.msg.err    ${ERROR_MSG_OF_NO_PASS}
  	${EMPTY}			${EMPTY}          div.msg.err    ${ERROR_MSG_OF_NO_EMAIL_PASS}
-  
+
 
 # Forget password by valid MPA
 

@@ -22,6 +22,8 @@ ${BETA_DPJP_FULL}       DPJP_FULL_BETA@yopmail.com
 ${BETA_DPJP_FULL_SN}    BAAB-0012-0924-1993-0800
 ${PRODUCT_NAME_DPJP}    パスワードマネージャー
 
+
+
 *** Keywords ***
 
 
@@ -39,13 +41,34 @@ Product DPJP full (D>=31) no AR (Locale=JA-JP)
     Submit Credentials
     MyAccount Should Be Open
 
-    # Check product list area
+    # Wait for product is loaded
     Wait Until Page Contains    ${PRODUCT_NAME_DPJP}     30 seconds
+
+    # Check product list area
+    # 1. Check product name
+    Check product name in product list area    ${PRODUCT_NAME_DPJP}
+
+    # 2. Check has expiration date in product list area
+    Check has expiration date in product list area  有効期限:
 
     # Check remainding area
     # 1. Check remaining days
     Check remaining days in remaining area      ${diff_days}
-    # Element Text Should Be    jquery=div.license_box p var.day     ${diff_days}
+
+    # 2. Check BuyNow Renew Upgrade button in remaining area
+    ${link}    Set Variable    http://akagrbeta.trendmicro.com/GREntry/ByParams?locale=JA-JP&SN=${BETA_DPJP_FULL_SN}&Region=0&PID=ID10&CID=CPTS&SRC=S
+    ${text}    Set Variable    今すぐ契約更新
+    Check BuyNow Renew Upgrade button in remaining area   ${link}   ${text}
+
+    # 3. Check AutoRenew switch in remaining area
+    ${status} =   Set Variable    off
+    ${link} =   Set Variable    http://akagrbeta.trendmicro.com/GREntry/ByParams?locale=JA-JP&SN=${BETA_DPJP_FULL_SN}&Region=0&PID=ID10&CID=OptIn&SRC=S
+    Check AutoRenew switch in remaining area    ${status}    ${link}
+
+    # 4. Check what is AR in remaining area
+    ${link} =   Set Variable    http://akagrbeta.trendmicro.com/GREntry/NonPayment?TARGET=DPJP&PID=ID10&FUNID=AutoRenewIntro&LOCALE=JA-JP
+    ${text} =   Set Variable    あんしん自動更新とは？
+    Check What is AR in remaining area      ${link}     ${text}
 
 
     [Teardown]    Close Browser

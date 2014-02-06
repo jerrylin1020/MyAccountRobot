@@ -81,14 +81,49 @@ Login Should Have Failed
     Location Should Be  ${ERROR URL}
     Title Should Be  Error Page
 
+
+# Remaining days' area
 Check remaining days in remaining area
     [Arguments]    ${text}
     Element Text Should Be    jquery=div.license_box p var.day     ${text}
 
 
+Check BuyNow Renew Upgrade button in remaining area
+    [Arguments]    ${link}      ${text}
+    # Get url link
+    ${attr1}=   Get Element attribute    jquery=div.license_box a.push_btn2.blue@href
+    Should Be Equal     ${attr1}     ${link}
+    # Check BuyNow Renew Upgrade button's text
+    Element Text Should Be    jquery=div.license_box a.push_btn2.blue     ${text}
 
-#Click Link  xpath=//form/p/a[1]
-#Capture Page Screenshot  ${L10N LANG}_Forget_Email_Non-JP_language.png
-#Capture Page Screenshot
+Check AutoRenew switch in remaining area
+    [Arguments]    ${ar_status}      ${link}
+    # Get AR status
+    ${attr1}=   Get Element attribute    jquery=div.autorenew a.toggle_switch@data-autorenew
+    Should Be Equal     ${attr1}     ${ar_status}
+    # Get AR switch link
+    ${attr2}=   Get Element attribute    jquery=div.autorenew a.toggle_switch@href
+    Should Be Equal     ${attr2}     ${link}
+
+Check What is AR in remaining area
+    [Arguments]    ${link}      ${text}
+    # Get what is AR link
+    ${attr1}=   Get Element attribute    jquery=div.link.question a@href
+    Should Be Equal     ${attr1}     ${link}
+    # Check what is AR text
+    Element Text Should Be    jquery=div.link.question a     ${text}
+
+# Product list area
+Check product name in product list area
+    [Arguments]    ${text}
+    Element Text Should Be    jquery=div.product.default.clearfix hgroup h4 var     ${text}
+
+Check has expiration date in product list area
+    [Arguments]    ${text}
+    Page Should Contain Element     jquery=div.product.default.clearfix hgroup h5.exp-date.a
+    Element Should Contain    jquery=div.product.default.clearfix hgroup h5.exp-date.a     ${text}
+
+
+
 
 

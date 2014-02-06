@@ -5,7 +5,6 @@ Documentation     A test suite for MyAccount Product tab.
 ...               the imported resource file.
 Resource          ../Resources/resource.txt
 Resource          ../Resources/TextMsg.txt
-Resource          ../Resources/TestingAccounts.txt
 Resource          ../Utility/backend_utility.txt
 
 
@@ -31,8 +30,8 @@ ${PRODUCT_NAME_DPJP}    パスワードマネージャー
 Product DPJP full (D>=31) no AR (Locale=JA-JP)
 	[Tags]		MA		ProductTab     DPJP
     # Invoke backend utility to update expiration date
-    @{date}=     Get Time   year month day   NOW + 31 d
-    Set expiration date      ${BETA_DPJP_FULL_SN}    @{date}[0]@{date}[1]@{date}[2]
+    ${diff_days} =   Set Variable    31
+    Set expiration date difference from today   ${BETA_DPJP_FULL_SN}    ${diff_days}
 
     Open Browser To Login Page	   JA-JP
     Input Username    ${BETA_DPJP_FULL}
@@ -43,10 +42,10 @@ Product DPJP full (D>=31) no AR (Locale=JA-JP)
     # Check product list area
     Wait Until Page Contains    ${PRODUCT_NAME_DPJP}     30 seconds
 
-
     # Check remainding area
     # 1. Check remaining days
-    Element Text Should Be    jquery=div.license_box p var.day     31
+    Check remaining days in remaining area      ${diff_days}
+    # Element Text Should Be    jquery=div.license_box p var.day     ${diff_days}
 
 
     [Teardown]    Close Browser

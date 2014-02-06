@@ -81,6 +81,10 @@ Login Should Have Failed
     Location Should Be  ${ERROR URL}
     Title Should Be  Error Page
 
+Check remaining days in remaining area
+    [Arguments]    ${text}
+    Element Text Should Be    jquery=div.license_box p var.day     ${text}
+
 
 
 #Click Link  xpath=//form/p/a[1]

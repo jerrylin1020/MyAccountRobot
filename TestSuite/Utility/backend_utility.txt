@@ -27,8 +27,13 @@ ${SET_EXPIRATION_DATE_URL}				${${PHASE}_SET_EXPIRATION_DATE_URL}
 
 
 *** Keywords ***
+Set expiration date difference from today
+	[Arguments]     	${sn} 	${diff_days}
+    @{date}=     Get Time   year month day   NOW + ${diff_days} d
+    Set expiration date      ${sn}    @{date}[0]@{date}[1]@{date}[2]
+
 Set expiration date
-	[Arguments]     	${SN} 	${DATE}
-    Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${FQDN_OF_BACKEND_UTILITY}${SET_EXPIRATION_DATE_URL}&SN=${SN}&ExpireDate=${DATE}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
+	[Arguments]     	${sn} 	${DATE}
+    Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${FQDN_OF_BACKEND_UTILITY}${SET_EXPIRATION_DATE_URL}&SN=${sn}&ExpireDate=${DATE}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     Wait Until Page Contains	${Response}  	60 seconds
     [Teardown]    Close Browser

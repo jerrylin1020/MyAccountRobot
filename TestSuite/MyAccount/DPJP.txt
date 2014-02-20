@@ -21,6 +21,7 @@ ${PASSWORD}     12345678
 ${BETA_DPJP_FULL}       DPJP_FULL_BETA@yopmail.com
 ${BETA_DPJP_FULL_SN}    BAAB-0012-0924-1993-0800
 ${PRODUCT_NAME_DPJP}    パスワードマネージャー
+${REMAININD_DAYS}   0
 
 
 
@@ -76,7 +77,9 @@ Product DPJP full (D>=31) no AR (Locale=JA-JP)
     #
     # --------------------------------------------
     # 1. Check remaining days
-    Should have remaining days info in remaining area      ${diff_days}
+    ${remain_days} =   Evaluate    int(${diff_days})+1
+    ${remain_days} =   Convert To String    ${remain_days}
+    Should have remaining days info in remaining area      ${remain_days}
 
     # 2. Check BuyNow Renew Upgrade button in remaining area
     ${link}    Set Variable    ${GR_PATH}?locale=JA-JP&SN=${BETA_DPJP_FULL_SN}&Region=0&PID=ID10&CID=CPTS&SRC=S
@@ -147,7 +150,9 @@ Product DPJP full (D=30) no AR (Locale=JA-JP)
     #
     # --------------------------------------------
     # 1. Check remaining days
-    Should have remaining days info in remaining area      ${diff_days}
+    ${remain_days} =   Evaluate    int(${diff_days})+1
+    ${remain_days} =   Convert To String    ${remain_days}
+    Should have remaining days info in remaining area      ${remain_days}
 
     # 2. Check BuyNow Renew Upgrade button in remaining area
     ${link}    Set Variable    ${GR_PATH}?locale=JA-JP&SN=${BETA_DPJP_FULL_SN}&Region=0&PID=ID10&CID=CPTS&SRC=S

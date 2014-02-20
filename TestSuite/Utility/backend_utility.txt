@@ -13,6 +13,7 @@ Resource          ../Resources/TextMsg.txt
 
 *** Variables ***
 ${Response} 	Done
+${PHASE}		BETA
 
 # Backend utility FQDN
 ${ALPHA_FQDN_OF_BACKEND_UTILITY}		http://10.1.100.35/
@@ -24,6 +25,11 @@ ${FQDN_OF_BACKEND_UTILITY}				${${PHASE}FQDN_OF_BACKEND_UTILITY}
 ${ALPHA_SET_EXPIRATION_DATE_URL}		AlphaBackendUtility/PrepareData.aspx?ExeList=SetFullExpireDate
 ${BETA_SET_EXPIRATION_DATE_URL}			BetaBackendUtility2/PrepareData.aspx?ExeList=SetFullExpireDate
 ${SET_EXPIRATION_DATE_URL}				${${PHASE}_SET_EXPIRATION_DATE_URL}
+
+# Backend utility URL for getting Ti serial number
+${ALPHA_GET_TI_SN_URL}		AlphaBackendUtility/GetSNFromKeyPool.aspx?ProjectName=Ti50/60_HE_Full
+${BETA_GET_TI_SN_URL}		BetaBackendUtility2/GetSNFromKeyPool.aspx?ProjectName=Ti50/60_HE_Full
+${GET_TI_SN_URL}			${${PHASE}_GET_TI_SN_URL}
 
 
 *** Keywords ***
@@ -37,3 +43,11 @@ Set expiration date
     Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${FQDN_OF_BACKEND_UTILITY}${SET_EXPIRATION_DATE_URL}&SN=${sn}&ExpireDate=${DATE}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     Wait Until Page Contains	${Response}  	60 seconds
     [Teardown]    Close Browser
+
+Get titanium serial number
+	[Return]  ${serial}
+	Wait Until Keyword Succeeds  2 min  30 sec 		Open Browser 	${FQDN_OF_BACKEND_UTILITY}${GET_TI_SN_URL}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
+    Wait Until Page Contains Element    xpath=//html/body/pre     120 seconds
+    ${serial}=   Get Text    xpath=//html/body/pre
+    [Teardown]    Close Browser
+

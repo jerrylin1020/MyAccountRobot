@@ -175,13 +175,10 @@ Should not have AR management in remaining area
 #
 # --------------------------------------------
 Wait until product list is displayed for a single product
-    [Arguments]    ${text}
     Wait Until Page Contains Element    jquery=div.product.default.clearfix hgroup h4 var     120 seconds
 
 Check product name in product list area
     [Arguments]    ${text}
-    ${attr1}=   Get Element attribute    jquery=div.link.mgmt a@href
-    Should Be Equal     ${attr1}     ${link}
     Element Text Should Be    jquery=div.product.default.clearfix hgroup h4 var     ${text}
 
 Should have expiration date in product list area

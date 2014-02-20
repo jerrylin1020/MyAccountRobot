@@ -31,6 +31,20 @@ ${ALPHA_GET_TI_SN_URL}		AlphaBackendUtility/GetSNFromKeyPool.aspx?ProjectName=Ti
 ${BETA_GET_TI_SN_URL}		BetaBackendUtility2/GetSNFromKeyPool.aspx?ProjectName=Ti50/60_HE_Full
 ${GET_TI_SN_URL}			${${PHASE}_GET_TI_SN_URL}
 
+# Variables for SaaS related
+${ALAPH_FQDN_OF_SAAS_REG}	regalpha.trendnet.org
+${BETA_FQDN_OF_SAAS_REG}	regbeta.trendmicro.com
+${FQDN_OF_SAAS_REG}		${${PHASE}_FQDN_OF_SAAS_REG}
+
+${REG_URL_OF_SSFC_TRIAL}		http://${FQDN_OF_SAAS_REG}/TERRA/OSA?SN=ZZMJ-0000-0000-0000-0000&PID=OB30
+${REG_URL_OF_SSJP_TRIAL}		http://${FQDN_OF_SAAS_REG}/TERRA/OSA?SN=ZZJJ-0000-0000-0000-0000&PID=OB30
+${REG_URL_OF_TMOG_TRIAL}		http://${FQDN_OF_SAAS_REG}/TERRA/OSA?SN=ZZMJ-0000-0000-0000-0000&PID=PM20
+
+
+
+# TMDP1.2
+# (lite) http://${FQDN}/TerraDP/ViewPool/SingleRegEntry.ashx?SN=ZZMJ-0000-0000-0000-0000&PID=ID10&GUID=A889D59E2D76019A87AF57FB39790362&VID=&APPVER=1.2.3.4567&LOCALE=EN-US
+# *Please replace with new GUID
 
 *** Keywords ***
 Set expiration date difference from today

@@ -28,12 +28,15 @@ Resource          ../../Utility/backend_utility.txt
 
 
 *** Test Cases ***
-Create SafeSync trail license
+# Parameter : PID
+Register Titanium
 	[Tags]		SafeSync_Trial
+    # [Arguments]     ${pid}
     # Generate Ti serial number from backend utility
-    ${serial}=    Get titanium serial number
-    Open Browser    http://account.trendmicro.com/?${serial}aaa    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
-    [Teardown]    Close Browser
+    ${serial}=    Get Titanium serial number    TE70
+    ${guid}=      Get random GUID
+    # Open Browser    http://account.trendmicro.com/?${serial}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
+    # [Teardown]    Close Browser
 
 
 

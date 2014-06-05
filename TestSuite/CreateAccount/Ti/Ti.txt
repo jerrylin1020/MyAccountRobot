@@ -24,19 +24,21 @@ Resource          ../../Utility/backend_utility.txt
 
 
 *** Keywords ***
-
-
-
-*** Test Cases ***
 # Parameter : PID
 Register Titanium
-	[Tags]		SafeSync_Trial
-    # [Arguments]     ${pid}
+	[Arguments]     ${pid}
     # Generate Ti serial number from backend utility
-    ${serial}=    Get Titanium serial number    TE70
+    ${serial}=    Get Titanium serial number    ${pid}
+    # Generate a randon GUID
     ${guid}=      Get random GUID
+    Open Titanium Reg form      ${pid}    ${serial}   ${guid}
+
+
     # Open Browser    http://account.trendmicro.com/?${serial}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     # [Teardown]    Close Browser
+
+
+
 
 
 

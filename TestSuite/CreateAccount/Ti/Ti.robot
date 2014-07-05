@@ -3,7 +3,7 @@ Documentation     A test suite for MyAccount Product tab.
 ...
 ...               This test has a workflow that is created using keywords in
 ...               the imported resource file.
-Resource          ../../Resources/resource.txt
+Resource          ../../Resources/resource.robot
 Resource          ../../Utility/backend_utility.txt
 
 

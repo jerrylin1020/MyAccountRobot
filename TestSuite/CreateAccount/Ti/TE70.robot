@@ -15,6 +15,7 @@ Resource          Ti.txt
 
 
 
+
 *** Test Cases ***
 Create new TE70
    	[Tags]	TE70

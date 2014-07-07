@@ -4,7 +4,7 @@ Documentation     A test suite for MyAccount Product tab.
 ...               This test has a workflow that is created using keywords in
 ...               the imported resource file.
 Resource          ../../Resources/resource.robot
-Resource          Ti.txt
+Resource          Ti.robot
 
 
 *** Variables ***

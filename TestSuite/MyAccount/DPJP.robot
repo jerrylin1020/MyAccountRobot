@@ -4,8 +4,8 @@ Documentation     A test suite for MyAccount Product tab.
 ...               This test has a workflow that is created using keywords in
 ...               the imported resource file.
 Resource          ../Resources/resource.robot
-Resource          ../Resources/TextMsg.txt
-Resource          ../Utility/backend_utility.txt
+Resource          ../Resources/TextMsg.robot
+Resource          ../Utility/backend_utility.robot
 
 
 # Set Tags

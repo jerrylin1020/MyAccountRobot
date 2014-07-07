@@ -1,8 +1,8 @@
 *** Settings ***
 Library			OperatingSystem
 Library 		Selenium2Library
-Resource        ErrorMsg.txt
-Resource        TextMsg.txt
+Resource        ErrorMsg.robot
+Resource        TextMsg.robot
 # Force Tags		Portalaaa
 # Default Tags	Portal
 
